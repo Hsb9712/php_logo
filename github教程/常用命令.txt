@@ -1,0 +1,10 @@
+更新本地文件到仓库
+git  add [filename]
+ git commit -m "版本信息"
+git config --global user.name "zousi" 设置提交代码时的用户信息
+git config --global user.email "3056953305@qq.com"
+git remote add origin git@github.com:zousi/php_log.git 添加远程仓库链接，若以链接可忽略，在.git/config 文件里可查看是否已添加链接
+git push -u origin master 更新到仓库
+
+克隆到本地
+git clone [如果本地远程链接用https，克隆时链接方式也要用https；如果本地远程链接用ssh，克隆时链接方式也要用ssh]
