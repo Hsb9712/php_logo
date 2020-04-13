@@ -1,0 +1,17 @@
+var arr = [1,2,3];
+
+for(let i=0;i<arr.length;i++){
+	if(arr[i]==2){
+		arr.splice(i,1);
+		i--;
+}
+}
+
+为什么要用for而不用each呢，因为splice这个方法会改变原始数组，如果用each，key（也就是i）不可控，如
+$.each(arr.function(i,v){//
+	if(arr[i]==2){
+		arr.splice(i,1);
+		i--;//此处操作是没有起作用的
+}
+})
+由于key不可控，所以后续循环会报错
