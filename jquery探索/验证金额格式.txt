@@ -1,0 +1,19 @@
+//检查价格输入格式是否正确，精确到分，允许为0，不控制大小
+//元素ele；提示信息msg
+function checkPriceFormat(ele,msg) {
+    // var regex = /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.)?(?:\d{1,2})?$/;
+    var regex =  /^(([1-9]\d*)|\d)(\.\d{1,2})?$/;
+    var price = ele.val().replace(/[^\d.]/g, "");
+        price = price.replace(/^\./g, "");
+        price = price.replace(/\.{2,}/g, ".");
+        price = price.replace(/\.$/g, "");
+        console.log(price)
+    //允许, 货币格式
+    if(!regex.test(price)){
+        layer.msg(msg+'且范围在0.01~99999999');
+        var number = Math.round(price*100)/100;
+        ele.val(number)
+        return false;
+    }
+    return true;
+}
