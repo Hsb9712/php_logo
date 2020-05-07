@@ -1,0 +1,105 @@
+    /**
+     * 生成日历
+     * @param $start
+     * @param $end
+     * @return array
+     */
+    function build_calendar() {
+
+        $start='2019-05-02';
+        $end='2019-07-01';
+        $start_month = (Int)date('m',strtotime($start));
+
+        $start_year = (Int)date('Y',strtotime($start));
+
+        $end_year = (Int)date('Y',strtotime($end));
+
+        $end_month = (Int)date('m',strtotime($end));
+
+        if ( $start_month == 1 ) {
+
+            $month = 12;
+
+            $year = $start_year - 1;
+
+        }else{
+
+            $month = $start_month - 1;
+
+            $year = $start_year;
+
+        }
+
+        $results = [];
+
+        while ( !($year == $end_year && $month == $end_month) ) {
+
+            if ( $month == 12 ) {
+
+                $year++;
+
+                $month = 1;
+
+            }else{
+
+                $month++;
+
+            }
+
+            // 本月第一天的位置
+
+            $firstDayOfMonth = mktime(0,0,0,$month,1,$year);
+
+            // 获取本月天数
+
+            $numberDays = date('t',$firstDayOfMonth);
+
+            // 获取本月第一天
+
+            $dateComponents = getdate($firstDayOfMonth);
+
+            $dayOfWeek = $dateComponents['wday'];
+
+            // 初始化天数计数器，从1号开始
+
+            $n = 0;
+
+            $result = [];
+
+            $line = 0;
+
+            while ($n < $numberDays) {
+
+                // 7天一行，7天一到新增一行
+
+                if ($dayOfWeek == 7) {
+
+                    $dayOfWeek = 0;
+
+                }
+
+                $result[$line][$dayOfWeek] = date('Y-m-d',strtotime('+ '.$n.'days',$firstDayOfMonth));
+
+                if ( $dayOfWeek == 6 ) {
+
+                    $line++;
+
+                }
+
+                // 计数器
+
+                $n++;
+
+                $dayOfWeek++;
+
+            }
+
+            $showMonth = str_pad($month, 2, "0", STR_PAD_LEFT);
+
+            $results[$year.'-'.$showMonth] = $result;
+
+        }
+
+        return $results;
+
+    }
