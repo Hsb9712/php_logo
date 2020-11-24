@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<title>移动端日期和时间选择插件 - 站长素材</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+
+	<link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+
+	<script src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript">
+        $(document).ready(function(){
+            // date time picker
+            if($(".iDate.full").length>0){
+                $(".iDate.full").datetimepicker({
+                    locale: "zh-cn",
+                    format: "YYYY-MM-DD a hh:mm",
+                    dayViewHeaderFormat: "YYYY年 MMMM"
+                });
+            }
+            if($(".iDate.date").length>0){
+                $(".iDate.date").datetimepicker({
+                    locale:"zh-cn",
+                    format:"YYYY-MM-DD",
+                    dayViewHeaderFormat:"YYYY年 MMMM"
+                });
+            }
+        })
+	</script>
+
+</head>
+
+<body style="padding: 30px">
+<div class="iDate full">
+	<input type="text">
+	<button type="button" class="addOn"></button>
+</div>
+<div class="iDate date">
+	<input type="text">
+	<button type="button" class="addOn"></button>
+</div>
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+	<p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
+	<p>来源：<a href="http://sc.chinaz.com/" target="_blank">站长素材</a></p>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 30569
+ * Date: 2018/5/31
+ * Time: 14:42
+ */
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+//use kartik\datetime\DateTimePicker;
+use kartik\widgets\DateTimePicker;
+$static = \frontend\modules\official\assets\AppAsset::register($this);
+$this->context->layout = false;
+?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>提交报修</title>
+	<link rel="stylesheet" href="<?=$static->baseUrl ?>/css/business/index.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+
+	<link rel="stylesheet" type="text/css" href="<?=$static->baseUrl ?>/css/business/styles.css" media="all">
+
+	<script src="<?=$static->baseUrl ?>/js/jquery.js"></script>
+	<script type="text/javascript" src="<?=$static->baseUrl ?>/js/moment.js"></script>
+	<script type="text/javascript" src="<?=$static->baseUrl ?>/js/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript">
+
+	</script>
+	<!-- 引入 jQuery 库 -->
+	<script src="<?=$static->baseUrl ?>/js/jquery.min.js"></script>
+	<script src="<?=$static->baseUrl ?>/js/placeImage.js"></script>
+</head>
+<script>
+
+    (function(doc, win) {
+
+        var docEl = doc.documentElement,
+
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+
+            recalc = function() {
+
+                var clientWidth = docEl.clientWidth;
+
+                var clientHeight = docEl.clientHeight;
+
+                if (!clientWidth) return;
+
+                docEl.style.fontSize = 100 * (clientWidth / 750) + 'px'
+
+            };
+
+        if (!doc.addEventListener) return;
+
+
+
+        win.addEventListener(resizeEvt, recalc, false);
+
+
+
+        recalc();
+
+    })(document, window);
+
+
+</script>
+<body>
+<div class="container">
+	<div class="tab_admin">
+		<div class="find_status">找资源</div>
+		<div class="fabu_status"> 发需求</div>
+		<div class="yifabu_status">已发布</span></div>
+	</div>
+	<div class="find">
+		<?php
+        foreach ($all as $item){
+            ?>
+		<div class="content">
+			<div class="info">
+				<div class="type"><?=$item['type']?></div>
+				<div class="detail">
+					<div class="number">数量：<?=$item['number']?></div>
+					<div class="jztime">截止时间：<?=date('Y-m-d',strtotime($item['jztime']))?></div>
+					<div class="yusuan">预算：<span class="money"><?=$item['yusuan']?></span>元</div>
+				</div>
+			</div>
+		</div>
+		<?php
+        }
+        ?>
+	</div>
+	<div class="fabu">
+		<form id="form"  action="<?=\yii\helpers\Url::to(['/official/fix/submit'])?>"  method="post" enctype="multipart/form-data">
+			<input name="_csrf-frontend" type="hidden" id="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
+			<input type="hidden" name="operate_status" value="INIT">
+			<p class="second">需求名称:<input type="text" name="type" value="" placeholder="请填写项目名称"><br>
+			</p><span class="baoxiu-error"></span>
+			<p class="second">数量:<input type="text" name="number" value="" placeholder="请填写数量"><br>
+			</p><span class="baoxiu-error"></span>
+			<p class="second">工期:<input type="text" name="days" value="" placeholder="请输入报修项目"><br>
+			</p><span class="baoxiu-error"></span>
+			<p class="second">预算:<input type="text" name="yusuan" value="" placeholder="请输入报修项目"><br>
+			</p><span class="baoxiu-error"></span>
+			<p class="second">交付时间:
+			<div class="iDate full">
+				<input type="text">
+				<button type="button" class="addOn"></button>
+			</div>
+			<div class="iDate date">
+				<input type="text">
+				<button type="button" class="addOn"></button>
+			</div><br>
+			</p><span class="baoxiu-error"></span>
+			<p class="second">有效时间: <div class="iDate full">
+			<input type="text">
+			<button type="button" class="addOn"></button>
+		</div><br>
+			</p><span class="baoxiu-error"></span>
+			<div class="guzhang-content">
+				<p class="second"> 需求描述: <br>
+					<textarea name="content" id="" cols="48" rows="6" placeholder="请填写详细需求描述"></textarea>
+				</p>
+				<span class="content-error"></span>
+			</div>
+			<div class="iDate full">
+				<input type="text">
+				<button type="button" class="addOn"></button>
+			</div>
+			<div class="iDate date">
+				<input type="text">
+				<button type="button" class="addOn"></button>
+			</div>
+			<input type="button" class="submit" onclick="checktosubmit()" readonly="true" value="提交">
+			<!--            <div class="submit">提交</div>-->
+		</form>
+	</div>
+	<div class="yifabu">
+		<?php
+        foreach ($my_business as $item){
+            ?>
+		<div class="content">
+			<div class="info">
+				<div class="type"><?=$item['type']?></div>
+				<div class="detail">
+					<div class="number">数量：<?=$item['number']?></div>
+					<div class="jztime">截止时间：<?=date('Y-m-d',strtotime($item['jztime']))?></div>
+					<div class="yusuan">预算：<span class="money"><?=$item['yusuan']?></span>元</div>
+				</div>
+			</div>
+		</div>
+		<?php
+        }
+        ?>
+	</div>
+</div>
+
+
+</body>
+<script>
+    $(function () {
+        $(".find_status").addClass("check1");
+        $(".fabu_status").removeClass("admin_check2");
+        $(".end_status").removeClass("check3");
+        // $(".find").hide();
+        $(".fabu").hide();
+        $(".yifabu").hide();
+    });
+
+    $(".find_status").click(function () {
+        $(".fabu").hide();
+        $(".yifabu").hide();
+        $(".find").show();
+        $(".want-baoxiu a").css("color","#ffffff");
+        $(".find_status").addClass("check1");
+        $(".fabu_status").removeClass("admin_check2");
+        $(".yifabu_status").removeClass("check3");
+        $(".baoxiu-record a").css("color","#0F8EE9");
+    });
+    $(".fabu_status").click(function () {
+        $(".fabu").show();
+        $(".find").hide();
+        $(".yifabu").hide();
+        $(".yifabu_status a").css("color","#0F8EE9");
+        $(".find_status a").css("color","#0F8EE9");
+        $(".find_status").removeClass("check1");
+        $(".fabu_status").addClass("admin_check2");
+        $(".yifabu_status").removeClass("check3");
+        $(".fabu_status a").css("color","#ffffff");
+    });
+    $(".yifabu_status").click(function () {
+        $(".yifabu").show();
+        $(".find").hide();
+        $(".fabu").hide();
+        $(".yifabu_status a").css("color","#ffffff");
+        $(".find_status a").css("color","#0F8EE9");
+        $(".find_status").removeClass("check1");
+        $(".fabu_status").removeClass("admin_check2");
+        $(".yifabu_status").addClass("check3");
+        $(".fabu_status a").css("color","#0F8EE9");
+    });
+</script>
+</html>

@@ -1,0 +1,35 @@
+mysql所以类型
+普通索引：最基本的索引，他没有任何限制
+1>直接创建索引
+create index index_name on table(column(length))
+2>修改表结构的方式添加索引
+alter table table_name add index index_name on(column(length))
+3>创建表的时候同时创建索引
+create table book(
+bookid int not null auto_increment,bookname varchar(255) not null,
+info varchar(255) not null,primary key('bookid'),index index_name(bookname(length));
+);
+4>删除索引
+drop index index_name on table;
+唯一索引：与普通索引类似，不同的就是：索引列的值必须为一，但允许有空值。如果是组合索引，则列值的组合和必须唯一。
+1>创建唯一索引
+create unique index indexName on table(column(lenghth))
+2>修改表结构
+alter table table_name add unique indexName on (column(length))
+3>创建表的时候直接指定
+create table 'table(
+'id' int(11) not null auto_increment,
+'name' char(255) character not null,
+'age' int(10) not null,unique indexName (name(length)));
+主键索引：是一种特殊的唯一索引，有一个表只能有一个主键，不允许有空值。一般是在建表的同事创建主键索引
+create table 'table'(
+'id' int(11) not null auto_increment,
+'title' char(255) not null,
+primary key('id'));
+组合索引：多个字段上创建的索引，只有在查询条件中使用了创建索引时的第一个字段，索引才会被使用。使用组合索引是遵循最左前缀集合
+alter table 'table' add index name_city_age(name,city,age); 
+全文索引：主要用来查找文本中的关键字，而不是直接与索引中的值相比较。fulltext索引跟其他索引大不相同，
+它更像是一个搜索引擎，而不是简单的 where语句的参数匹配。fulltext索引配合match against操作使用，
+而不是一般的where语句加like。它可以在create table，alter table，create index使用，不过目前只有char、varchar、text列上
+可以创建全文索引。值得一提的是，在数据量较大的死后，现将数据放入一个没有全局索引的表中，然后再用create index创建fulltext索引，
+要比先为一张表建立fulltext然后再将数据写入的速度快很多。

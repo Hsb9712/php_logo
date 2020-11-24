@@ -1,0 +1,94 @@
+引入js
+<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=DNWBZ-ICER4-7EHUM-XSEWP-SSW23-Y4FN7"></script>
+初始加载
+<script>
+    $(".gis").addClass("layui-nav-itemed").find(".show").addClass("layui-this");
+
+    window.onload = function() {
+        var center = new qq.maps.LatLng(31.114940,121.374460);//31.121670，121.376470
+        var map = new qq.maps.Map(document.getElementById('map'),{
+            center: new qq.maps.LatLng(31.121670,121.376470),
+            zoom: 13
+        });
+        var infoWin = new qq.maps.InfoWindow({
+            map: map
+        });
+标注
+        $.post("<?= \yii\helpers\Url::to(['/site/gis/getposition']) ?>",function (result) {
+            var data = $.parseJSON(result);
+            var latlngs = [];
+            var address = [];
+            $.each(data.data,function (index,value) {
+                if (value.address){
+                    // latlngs.push(new qq.maps.LatLng(value.x,value.y))
+                    // address.push(value.address)
+                    //调用地址解析类
+                    geocoder = new qq.maps.Geocoder({
+                        complete : function(result){
+                            map.setCenter(result.detail.location);
+                            console.log(result.detail.location)
+                            var marker = new qq.maps.Marker({
+                                map:map,
+                                position: result.detail.location
+                            });
+                            qq.maps.event.addListener(marker, 'click', function() {
+                                infoWin.open();
+                                // console.log(result.detail)
+                                infoWin.setContent('<div style="text-align:left;white-space:nowrap;margin:10px;"> ' +
+                                    value.official_name  +'<a style="color: blue;" href="<?=\yii\helpers\Url::to(['/site/company/detail'])?>?company_id='+value.id+'">[查看详情]</a><br>'+
+                                    result.detail.address + '<br><a style="color: blue;" href="http://apis.map.qq.com/uri/v1/routeplan?type=drive&to='+result.detail.address+'&policy=0&referer=educationBase">去这里</a> </div>');
+                                infoWin.setPosition(result.detail.location);
+                                // window.location.href='http://apis.map.qq.com/uri/v1/routeplan?type=drive&to='+result.detail.address+'&policy=0&referer=educationBase';
+                            });
+                        }
+                    });
+                    geocoder.getLocation( value.address);
+                }
+            })
+        })
+    };
+搜索
+    function searchResult(address,id,key){
+        $.ajax({
+            type:'get',
+            url:'http://apis.map.qq.com/ws/geocoder/v1/?address='+address+'&key='+key+'&output=jsonp',
+            dataType:'jsonp',
+            jsonp:'callback',
+            success:function(data) {
+                if (data.status==110||data.status==347){
+                    alert("查詢無結果")
+                }else {
+                    console.log(data);
+                    var posi = data.result.location;
+                    console.log(posi);
+                    var center = new qq.maps.LatLng(posi.lat, posi.lng);
+                    var map = new qq.maps.Map(id, {
+                        center: center,
+                        zoom: 16
+                    });
+                    //创建marker
+                    var marker = new qq.maps.Marker({
+                        position: center,
+                        map: map
+                    });
+
+                }
+            },
+            error:function() {
+                alert('fail');
+            }
+
+        });
+    }
+    //点击事件
+    var map=document.getElementById('map');
+    $('#search').on('click',function() {
+        var company_id = $("#company_id").val();
+        $.post("<?=\yii\helpers\Url::to(['/site/gis/getaddress'])?>",{company_id:company_id},function (result) {
+            var data = $.parseJSON(result);
+            console.log(data.data)
+            searchResult(data.data,map,'DNWBZ-ICER4-7EHUM-XSEWP-SSW23-Y4FN7');
+        })
+        //调用函数
+    });
+</script>

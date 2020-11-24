@@ -1,0 +1,13 @@
+$(window).resize(function() {
+        resize();
+    });
+
+    function resize(){
+        var w=$("body").width();
+        var rate=w/$(".page-container").width();
+        $(".page-container").css("transform","scale("+rate+")");
+        $(".page-container").css("-webkit-transform","scale("+rate+")");
+        $(".page-container").css("margin-top",950*(rate-1)/2);
+        $(".page-container").css("margin-left",1900*(rate-1)/2);
+    }
+    resize();

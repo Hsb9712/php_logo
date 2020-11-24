@@ -1,0 +1,23 @@
+public function actionIndex(){
+
+//获取缓存组件
+$cache = \YII::$app->cache;
+
+//往缓存中写数据
+$cache->add('key1','hello world!');
+
+
+//有效期设置
+$cache->add('key2','hello world2',15);
+//修改数据
+$cache->set('key1','hello world3');
+
+//删除数据
+$cache->delete('key1');
+
+//清空数据
+$cache->flush();
+
+//读缓存
+$data = $cache->get('key1');
+}

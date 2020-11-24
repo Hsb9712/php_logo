@@ -1,0 +1,2 @@
+mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html//調試工具
+https://developers.weixin.qq.com/minigame/dev/index.html//開發工具

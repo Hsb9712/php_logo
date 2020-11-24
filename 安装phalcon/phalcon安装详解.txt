@@ -1,0 +1,24 @@
+一、
+先去phalcon官网下载与php版本相对应的扩展包，放到php/ext目录下，然后再php.ini文件中加入：extension=php_phalcon.dll
+扩展包下载地址：https://github.com/phalcon/cphalcon/releases/tag/v3.1.2
+二、
+下载phalcon windows工具
+
+github地址：https://github.com/phalcon/phalcon-devtools
+百度网盘地址：https://pan.baidu.com/s/1nvUbIPV
+下载完后放到根目录，如有问题，配置phalcon.bat文件，设置里边的路径为本地绝对路径
+配置环境变量，把工具地址加上去就ok，
+测试：phalcon
+创建项目：phalcon project erphalcon modules --enable-webtools
+modules 多模块
+--enable-webtools 能够在网页使用工具
+--name 新项目的名字
+--enables-webtools 是否使用webtools开发辅助组件
+--directory= s 在何处创建项目(可选)
+--type= s 应用的种类
+--template-path  
+指定模板路径[可选]  
+--use-config-ini  
+使用ini文件作为配置保存文件[可选]  
+--trace 出错时是否显示框架的trace信息[可选]  
+--help  显示帮助  

@@ -1,0 +1,11 @@
+首先我们找到引用的公共配置文件的main.php
+
+然后设置session
+
+'components'=>array(
+    'session'=>array(
+        'timeout'=>3600,
+    ),
+)
+
+ 

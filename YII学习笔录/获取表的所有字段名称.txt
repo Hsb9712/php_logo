@@ -1,0 +1,3 @@
+$table = Ä£ÐÍÃû::tableName();
+$tableSchema = Yii::$app->db->schema->getTableSchema($table);
+$fields = \yii\helpers\ArrayHelper::getColumn($tableSchema->columns, 'name', false);

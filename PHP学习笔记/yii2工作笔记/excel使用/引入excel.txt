@@ -1,0 +1,4 @@
+下载地址 https://github.com/PHPOffice/PHPExcel/archive/1.8.1.zip 
+在入口文件index.php 或者 admin.php中引入
+
+require __DIR__.'/../vendor/phpoffice/phpexcel/Classes/PHPExcel.php';

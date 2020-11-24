@@ -1,0 +1,93 @@
+chart: {
+        backgroundColor: 'transparent',//
+        type:"column"//设置图表类型
+        },
+title: {
+        text: " "//设置标题
+        ,align:"left"//设置标题位置
+        ,style: {
+        color:"#D6EBFF",//设置标题颜色
+        fontSize:"18px"//设置标题字体大小
+        },x:0
+        },
+xAxis: {
+       categories:data.data.name_list//设置标签列表
+       ,labels: {//设置标签样式
+       style: {
+       color: '#86B8DD',//轴标签颜色
+       fontSize:'.14rem'
+        }
+        }
+        ,tickColor:"#072651"
+        ,lineColor:"#072651"
+        },
+yAxis: {
+        title: {
+         text: ''
+         }
+        ,tickPositions: [0,20,40,60,80,100]//设置轴刻度
+        ,gridLineColor:"#072651"//设置轴颜色
+        ,gridLineWidth:1
+        ,labels: {
+                 style: {
+                 color: '#7A819D',//轴标签颜色
+                 fontSize:'.14rem'
+                        }
+                  },
+        },
+exporting:{
+            enabled:false//是否导出图表
+           },
+ credits: {
+           enabled: false//是否设置版权信息
+},
+legend: {
+           enabled: false,//是否显示图注
+           align:"right",
+           verticalAlign:"top",
+           lineHeight:".16rem",
+         },
+plotOptions: {
+             column: {
+                       grouping: false,//是否分组
+                        shadow: false,
+                        borderWidth: 0,//设置柱子边框宽度
+                        pointWidth:5,//设置柱子宽度
+                        allowPointSelect: false,//是否开启选中状态
+                        cursor: 'pointer',//鼠标变为手指
+                        dataLabels: {
+                        enabled: false,//是否在图表上显示数据
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function () {
+                            return this.point.y; //在饼图上直接显示 “A:多少人”
+                        }
+                    },
+events: {//设置事件响应
+         click: function (e) {
+                            $(".degree_container").show();
+                            $(".premise_degree_container").hide();
+                            // RepairDegree.loadData(e.point.id);
+                            RepairDegree.init(e);
+                        },
+                        showInLegend: false
+                    }
+                }
+            }
+                    ,
+tooltip: {//设置提示框
+          borderWidth: 0,//设置提示框边框
+          backgroundColor: "#128CEB",//设置提示框边框
+          pointFormat: '<span style="display:block; margin-bottom:1.6rem" >满意度: <b>{point.y}</b></span><br/>',//格式化要显示的内容
+          shared: true,
+          style: {
+                   color: "#ffffff"
+// ,fontSize:"0.26rem"
+                  },
+          },
+series: [{
+           type: 'column',
+            name: '',              //name，type，data是内置参数。不能自己定义一个参数。
+            data: data.data.premise
+                    }]
+                }

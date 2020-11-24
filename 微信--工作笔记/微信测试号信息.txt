@@ -1,0 +1,40 @@
+公众号测试号登录地址：
+http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
+appID
+wxa2f88c193e1e2162
+appsecret
+ae1c50e59e9772163bc7f2fc22c58ad6
+明谷菜单：
+{
+    "button": [
+        {
+            "name": "走进明谷", 
+            "type": "view", 
+            "url": "http://qbmgkjy.shmh.gov.cn/entry/index/index"
+        }, 
+        {
+            "name": "明谷服务", 
+            "type": "view", 
+            "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa2f88c193e1e2162&redirect_uri=http%3A%2F%2Fqbmgkjy.shmh.gov.cn%2Fofficial%2Findex%2Findex&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+        }, 
+        {
+            "name": "我的明谷", 
+            "type": "view", 
+            "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa2f88c193e1e2162&redirect_uri=http%3A%2F%2Fqbmgkjy.shmh.gov.cn%2Fofficial%2Fmycenter%2Findex&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+        }
+    ]
+}
+
+授权：
+       //获取code
+        $RequestUrl ="https://open.weixin.qq.com/connect/oauth2/authorize";
+        $appid="wxa2f88c193e1e2162";
+        $appsecret ="ae1c50e59e9772163bc7f2fc22c58ad6";
+        $redirect_uri=urlencode("http://minggu.jet-think.com/official/index/index");
+        $scope = "snsapi_userinfo";
+        $url = $RequestUrl."?appid=".$appid."&redirect_uri=".$redirect_uri."&response_type=code&scope=".$scope."&state=STATE#wechat_redirect";
+//        获取access_token和openid
+       $access_token =" https://api.weixin.qq.com/sns/oauth2/access_token?appid={$appid}&secret={$appsecret}&code=081VzcXX1XJlYS0O42YX1fJsXX1VzcXt&grant_type=authorization_code";
+        echo $access_token."<br>";
+        //获取用户信息
+        $userinfo = "https://api.weixin.qq.com/sns/userinfo?access_token=9_qFyQfJsHp-cWKfh60QYDH9x4szIM1uPwn4MmuK5_psn_bVOThGfFCGzbVA8OlFNdFp3453h5NeJU5jCAeciT2Q&openid=oLXsr0xYRc_nZWrhgXAzr4onIsZM&lang=zh_CN";
