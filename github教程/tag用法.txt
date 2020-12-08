@@ -1,0 +1,7 @@
+git tag -a 版本号 -m '版本说明'  //创建tag
+git tag //查看版本列表
+git show 版本号 //查看附注信息
+git push origin --tags //把标签同步到远程代码库
+git tag -d 版本号 //删除本地该版本号的内容
+git push origin :refs/tags/版本号  //删除线上该版本内容
+git fetch origin tag 版本号 //获取远程版本
