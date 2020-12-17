@@ -1,0 +1,19 @@
+nosql的四大分类
+KV键值对：
+    新浪：Redis
+    美团：Redis+Tair
+    阿里、百度：Redis+memecache
+文档型数据库（bson格式和json一样）：
+    MongoDB（一般必须要掌握）
+        一个基于分布式文件存储的数据库，C++编写，主要用来处理大量的文档
+        一个介于关系型数据库和非关系型数据库中间的产品，MongoDB是非关系型数据库中功能最丰富、夫i想关系型数据库的！
+    ConthDB
+
+    列存储数据库
+        HBase
+        分布式文件系统
+
+图形数据库
+    Neo4j，InfoGrid
+
+
