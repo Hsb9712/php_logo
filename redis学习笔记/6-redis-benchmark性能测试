@@ -1,0 +1,6 @@
+测试性能
+    redis-benchmark是一个压力测试工具，官方自带的性能测试工具
+
+    #测试：100个并发连接 10000请求
+    redis-benchmark -h localhost -p 6379 -c 100 -n 10000
+
