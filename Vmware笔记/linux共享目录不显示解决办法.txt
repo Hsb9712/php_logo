@@ -1,0 +1,5 @@
+1、vmhgfs-fuse .host:/ /mnt/hgfs 
+2、vim /etc/fstab 进入文件并在尾部插入内容：.host:/ /mnt/hgfs fuse.vmhgfs-fuse allow_other 0 0
+3、重启：reboot
+
+进入/mnt/hgfs查看
